@@ -7,23 +7,6 @@ const accountsEndpoint = 'https://3hkaob4gkc.execute-api.us-east-1.amazonaws.com
 const customersEndpoint = 'https://3hkaob4gkc.execute-api.us-east-1.amazonaws.com/prod/au-hackathon/customers'
 const transactionsEndpoint = 'https://3hkaob4gkc.execute-api.us-east-1.amazonaws.com/prod/au-hackathon/transactions'
 
-const headers = {
-    "access-control-allow-origin": "*",
-    "access-control-allow-credentials": true,
-    "access-control-allow-methods": "*"
-}
-
-
-function getAccounts() {
-    return agent.post(accountsEndpoint)
-        .send({})
-}
-
-function getAccount(id) {
-    console.log('id', id)
-    agent.post(accountsEndpoint)
-        .send({'account_id': parseInt(id)})
-}
 
 app.use(function(req, res, next) {
     res.header("access-control-allow-origin", "*");
