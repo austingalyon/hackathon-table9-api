@@ -1,0 +1,11 @@
+{
+  "name": "table-9-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.2",
+    "koa": "^2.3.0",
+    "superagent": "^3.8.0"
+  }
+}
