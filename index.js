@@ -13,25 +13,35 @@ const headers = {
 
 
 function getAccounts() {
-    return agent
-        .post(accountsEndpoint)
+    return agent.post(accountsEndpoint)
         .send({})
 }
 
+function getAccount(id) {
+    console.log('id', id)
+    return agent.post(accountsEndpoint)
+        .send({'account_id': parseInt(id)})
+}
+
 app.use(function(req, res, next) {
-  res.header("access-control-allow-origin", "*");
-    console.log('mayyybbee')
-  next();
+    res.header("access-control-allow-origin", "*");
+    next();
 });
 
 app.get('/', (req, res) => res.send('Hello World!'))
+
+// accounts
 app.get('/accounts', (req, res) =>
     getAccounts()
         .then((response) => {
-            console.log('response', response)
-            res.header['access-control-allow-origin'] = '*'
-            res.header['access-control-allow-methods'] =  "*"
-            return res.send(response)
+            return res.send(response.body)
         }))
+
+app.get('/accounts/:id', (req, res) =>
+    getAccount(req.params.id)
+        .then((response) => {
+            return res.send(response.body)
+        }))
+
 
 app.listen(5000, () => console.log('Example app listening on port 5000!'))
