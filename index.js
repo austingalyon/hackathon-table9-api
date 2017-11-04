@@ -4,6 +4,8 @@ const express = require('express')
 const app = express()
 
 const accountsEndpoint = 'https://3hkaob4gkc.execute-api.us-east-1.amazonaws.com/prod/au-hackathon/accounts'
+const customersEndpoint = 'https://3hkaob4gkc.execute-api.us-east-1.amazonaws.com/prod/au-hackathon/customers'
+const transactionsEndpoint = 'https://3hkaob4gkc.execute-api.us-east-1.amazonaws.com/prod/au-hackathon/transactions'
 
 const headers = {
     "access-control-allow-origin": "*",
@@ -19,7 +21,7 @@ function getAccounts() {
 
 function getAccount(id) {
     console.log('id', id)
-    return agent.post(accountsEndpoint)
+    agent.post(accountsEndpoint)
         .send({'account_id': parseInt(id)})
 }
 
@@ -32,13 +34,36 @@ app.get('/', (req, res) => res.send('Hello World!'))
 
 // accounts
 app.get('/accounts', (req, res) =>
-    getAccounts()
+    agent.post(accountsEndpoint)
+        .send({})
         .then((response) => {
             return res.send(response.body)
         }))
 
 app.get('/accounts/:id', (req, res) =>
-    getAccount(req.params.id)
+    agent.post(accountsEndpoint)
+        .send({'account_id': parseInt(req.params.id)})
+        .then((response) => {
+            return res.send(response.body)
+        }))
+
+app.get('/customers', (req, res) =>
+    agent.post(customersEndpoint)
+        .send({})
+        .then((response) => {
+            return res.send(response.body)
+        }))
+
+app.get('/customers/:id', (req, res) =>
+    agent.post(customersEndpoint)
+        .send({'customer_id': parseInt(req.params.id)})
+        .then((response) => {
+            return res.send(response.body)
+        }))
+
+app.get('/transactions/:accountId', (req, res) =>
+    agent.post(transactionsEndpoint)
+        .send({'account_id': parseInt(req.params.accountId)})
         .then((response) => {
             return res.send(response.body)
         }))
